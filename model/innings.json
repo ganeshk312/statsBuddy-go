@@ -1,0 +1,337 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Cricket Match API",
+      "version": "1.0.0",
+      "description": "API for managing cricket match data, including innings, overs, deliveries, and related details."
+    },
+    "paths": {
+      "/match": {
+        "get": {
+          "summary": "Get match details",
+          "operationId": "getMatchDetails",
+          "responses": {
+            "200": {
+              "description": "Match details retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Match"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create or update match data",
+          "operationId": "createOrUpdateMatch",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Match"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Match created/updated successfully"
+            }
+          }
+        }
+      },
+      "/innings": {
+        "get": {
+          "summary": "Get innings details",
+          "operationId": "getInningsDetails",
+          "responses": {
+            "200": {
+              "description": "Innings details retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Innings"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Match": {
+          "type": "object",
+          "properties": {
+            "innings": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Innings"
+              }
+            }
+          }
+        },
+        "Innings": {
+          "type": "object",
+          "properties": {
+            "team": {
+              "type": "string"
+            },
+            "overs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Over"
+              }
+            },
+            "absent_hurt": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "penalty_runs": {
+              "$ref": "#/components/schemas/PenaltyRuns"
+            },
+            "declared": {
+              "type": "boolean"
+            },
+            "forfeited": {
+              "type": "boolean"
+            },
+            "powerplays": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PowerPlay"
+              }
+            },
+            "miscounted_overs": {
+              "$ref": "#/components/schemas/MiscountedOvers"
+            },
+            "target": {
+              "$ref": "#/components/schemas/Target"
+            },
+            "super_over": {
+              "type": "boolean"
+            }
+          }
+        },
+        "Over": {
+          "type": "object",
+          "properties": {
+            "over": {
+              "type": "integer"
+            },
+            "deliveries": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Delivery"
+              }
+            }
+          }
+        },
+        "Delivery": {
+          "type": "object",
+          "properties": {
+            "batter": {
+              "type": "string"
+            },
+            "bowler": {
+              "type": "string"
+            },
+            "non_striker": {
+              "type": "string"
+            },
+            "runs": {
+              "$ref": "#/components/schemas/Runs"
+            },
+            "wickets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Wicket"
+              }
+            },
+            "extras": {
+              "$ref": "#/components/schemas/Extras"
+            },
+            "replacements": {
+              "$ref": "#/components/schemas/Replacements"
+            },
+            "review": {
+              "$ref": "#/components/schemas/Review"
+            }
+          }
+        },
+        "Runs": {
+          "type": "object",
+          "properties": {
+            "batter": {
+              "type": "integer"
+            },
+            "extras": {
+              "type": "integer"
+            },
+            "total": {
+              "type": "integer"
+            }
+          }
+        },
+        "Wicket": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "player_out": {
+              "type": "string"
+            },
+            "fielders": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "Extras": {
+          "type": "object",
+          "properties": {
+            "byes": {
+              "type": "integer"
+            },
+            "legbyes": {
+              "type": "integer"
+            },
+            "noballs": {
+              "type": "integer"
+            },
+            "penalty": {
+              "type": "integer"
+            },
+            "wides": {
+              "type": "integer"
+            }
+          }
+        },
+        "PenaltyRuns": {
+          "type": "object",
+          "properties": {
+            "pre": {
+              "type": "integer"
+            },
+            "post": {
+              "type": "integer"
+            }
+          }
+        },
+        "PowerPlay": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "number"
+            },
+            "to": {
+              "type": "number"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "MiscountedOvers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/components/schemas/MiscountedOver"
+          }
+        },
+        "MiscountedOver": {
+          "type": "object",
+          "properties": {
+            "balls": {
+              "type": "integer"
+            },
+            "umpire": {
+              "type": "string"
+            }
+          }
+        },
+        "Target": {
+          "type": "object",
+          "properties": {
+            "overs": {
+              "type": "integer"
+            },
+            "runs": {
+              "type": "integer"
+            }
+          }
+        },
+        "Replacements": {
+          "type": "object",
+          "properties": {
+            "match": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/MatchReplacement"
+              }
+            },
+            "role": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RoleReplacement"
+              }
+            }
+          }
+        },
+        "MatchReplacement": {
+          "type": "object",
+          "properties": {
+            "in": {
+              "type": "string"
+            },
+            "out": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "team": {
+              "type": "string"
+            }
+          }
+        },
+        "RoleReplacement": {
+          "type": "object",
+          "properties": {
+            "in": {
+              "type": "string"
+            },
+            "out": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            }
+          }
+        },
+        "Review": {
+          "type": "object",
+          "properties": {
+            "team": {
+              "type": "string"
+            },
+            "result": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  

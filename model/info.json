@@ -1,0 +1,293 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Cricket Match Data API",
+      "version": "1.0.0",
+      "description": "An API specification for storing and managing cricket match data."
+    },
+    "paths": {},
+    "components": {
+      "schemas": {
+        "MatchData": {
+          "type": "object",
+          "required": ["balls_per_over", "dates", "gender", "match_type", "outcome", "players", "registry", "season", "supersubs", "team_type", "teams", "toss"],
+          "properties": {
+            "balls_per_over": {
+              "type": "integer",
+              "example": 6,
+              "description": "The number of balls expected per over, generally 6."
+            },
+            "bowl_out": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "bowler": {
+                    "type": "string",
+                    "description": "The name of the bowler who bowled the ball.",
+                    "example": "V Sehwag"
+                  },
+                  "outcome": {
+                    "type": "string",
+                    "description": "The outcome of the bowl-out ball, either hit or miss.",
+                    "example": "hit"
+                  }
+                },
+                "required": ["bowler", "outcome"]
+              },
+              "description": "Details of any bowl-out used to decide the outcome of the match."
+            },
+            "city": {
+              "type": "string",
+              "example": "Chennai",
+              "description": "The city in which the game took place."
+            },
+            "dates": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date",
+                "example": "2016-07-26"
+              },
+              "description": "An array of dates on which the match took place."
+            },
+            "event": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The name of the event the match took place in.",
+                  "example": "West Indies Women in South Africa T20I Series"
+                },
+                "match_number": {
+                  "type": "integer",
+                  "description": "The match number within the event.",
+                  "example": 3
+                },
+                "group": {
+                  "type": "string",
+                  "description": "The group the match was part of, if any.",
+                  "example": "North"
+                },
+                "stage": {
+                  "type": "string",
+                  "description": "The stage of the event at which the match took place.",
+                  "example": "Super 10"
+                }
+              }
+            },
+            "gender": {
+              "type": "string",
+              "description": "The gender of the players who took part in the match.",
+              "enum": ["male", "female"],
+              "example": "male"
+            },
+            "match_type": {
+              "type": "string",
+              "description": "The type of match this data file refers to.",
+              "enum": ["Test", "ODI", "T20", "IT20", "ODM", "MDM"],
+              "example": "T20"
+            },
+            "match_type_number": {
+              "type": "integer",
+              "description": "The number of this particular match type.",
+              "example": 2404
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "example": "player_of_match"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "powerplays": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "enum": ["mandatory", "batting", "fielding"]
+                          }
+                        },
+                        "example": {
+                          "1": ["batting"],
+                          "2": ["batting"]
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "description": "Details on any data regarded as missing from the match."
+            },
+            "officials": {
+              "type": "object",
+              "properties": {
+                "match_referees": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["JJ Crowe"]
+                },
+                "reserve_umpires": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["MW Graham-Smith"]
+                },
+                "tv_umpires": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["P Wilson"]
+                },
+                "umpires": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["SD Fry", "SJ Nogajski"]
+                }
+              },
+              "description": "Details on the officials involved in the match."
+            },
+            "outcome": {
+              "type": "object",
+              "properties": {
+                "winner": {
+                  "type": "string",
+                  "description": "The name of the winning team.",
+                  "example": "England"
+                },
+                "by": {
+                  "type": "object",
+                  "properties": {
+                    "innings": {
+                      "type": "integer",
+                      "description": "If the match was won by an innings and something.",
+                      "example": 1
+                    },
+                    "runs": {
+                      "type": "integer",
+                      "description": "If the match was won by a number of runs.",
+                      "example": 209
+                    },
+                    "wickets": {
+                      "type": "integer",
+                      "description": "If the match was won by a number of wickets.",
+                      "example": 3
+                    }
+                  }
+                },
+                "result": {
+                  "type": "string",
+                  "description": "The result of the match if not won by a team.",
+                  "enum": ["draw", "no result", "tie"],
+                  "example": "tie"
+                },
+                "method": {
+                  "type": "string",
+                  "description": "Any method used to determine the winner.",
+                  "example": "D/L"
+                },
+                "bowl_out": {
+                  "type": "string",
+                  "description": "The team name of the winner of any bowl-out.",
+                  "example": "New Zealand"
+                },
+                "eliminator": {
+                  "type": "string",
+                  "description": "The team name of the winner of any eliminator super-over.",
+                  "example": "Kings XI Punjab"
+                }
+              },
+              "required": ["winner"]
+            },
+            "players": {
+              "type": "object",
+              "description": "A list of players officially involved in the match for each team.",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "registry": {
+              "type": "object",
+              "properties": {
+                "people": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string",
+                    "description": "A stable unique identifier for people mentioned in the match data."
+                  }
+                }
+              }
+            },
+            "season": {
+              "type": "string",
+              "description": "The season during which the match took place.",
+              "example": "2018"
+            },
+            "supersubs": {
+              "type": "object",
+              "additionalProperties": { //supersubs to be update
+                "type": "string",
+                "description": "The name of the supersub for the team."
+              }
+            },
+            "team_type": {
+              "type": "string",
+              "description": "The type of team playing in the match.",
+              "enum": ["international", "club"],
+              "example": "international"
+            },
+            "teams": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "The names of the teams who played in the match.",
+              "example": ["Australia", "India"]
+            },
+            "toss": {
+              "type": "object",
+              "properties": {
+                "decision": {
+                  "type": "string",
+                  "description": "The decision made by the team winning the toss.",
+                  "enum": ["bat", "field"],
+                  "example": "bat"
+                },
+                "winner": {
+                  "type": "string",
+                  "description": "The name of the team which won the toss.",
+                  "example": "Australia"
+                },
+                "uncontested": {
+                  "type": "boolean",
+                  "description": "Indicates if the toss was uncontested.",
+                  "example": true
+                }
+              },
+              "required": ["decision", "winner"]
+            },
+            "venue": {
+              "type": "string",
+              "description": "The venue in which the game took place.",
+              "example": "Old Trafford"
+            }
+          }
+        }
+      }
+    }
+  }
+  
