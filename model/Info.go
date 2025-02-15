@@ -123,7 +123,7 @@ type MatchInfo struct {
 	Gender          string              `json:"gender"`                      // Gender of the players (male, female)
 	MatchType       string              `json:"match_type"`                  // Type of the match (Test, ODI, T20, etc.)
 	MatchTypeNumber *int                `json:"match_type_number,omitempty"` // Match number for this type (optional)
-	Missing         []string            `json:"missing,omitempty"`           // List of missing data fields
+	Missing         interface{}         `json:"missing,omitempty"`           // List of missing data fields
 	Officials       *Officials          `json:"officials,omitempty"`         // Information about match officials
 	Outcome         *Outcome            `json:"outcome,omitempty"`           // Outcome of the match
 	Overs           int                 `json:"overs"`                       // Number of overs per side
@@ -167,8 +167,9 @@ type Event struct {
 	Name        string `json:"name"`         // Name of the event
 	MatchNumber int    `json:"match_number"` // Match number in the event
 	// Group       string `json:"group"`        // Group (if any)
-	Group Group  `json:"group,omitempty"` // Group (if any)
-	Stage string `json:"stage"`           // Stage of the event (e.g. Final)
+	Group   Group  `json:"group,omitempty"` // Group (if any)
+	Stage   string `json:"stage"`           // Stage of the event (e.g. Final)
+	SubName string `json:"sub_name,omitempty"`
 }
 
 type Group string
@@ -220,9 +221,11 @@ type Registry struct {
 }
 
 // SuperSubs represents any supersub used by a team.
-type SuperSubs struct {
-	Teams map[string]string `json:"teams"` // Team name and supersub player
-}
+// type SuperSubs struct {
+// 	Teams map[string]string `json:"teams"` // Team name and supersub player
+// }
+
+type SuperSubs map[string]string
 
 // Toss stores the result of the toss.
 type Toss struct {

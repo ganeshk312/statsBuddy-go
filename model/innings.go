@@ -107,8 +107,8 @@ type Wicket struct {
 	Fielders  []Fielder `json:"fielders,omitempty"`
 }
 type Fielder struct {
-	Name string `json:"name"`
-	// Substitute bool   `json:"substitute,omitempty"`
+	Name       string `json:"name"`
+	Substitute bool   `json:"substitute,omitempty"`
 }
 
 // Extras represents the extras conceded on a delivery.
@@ -144,8 +144,8 @@ type MiscountedOver struct {
 
 // Target represents the target score and overs for an innings.
 type Target struct {
-	Overs int `json:"overs"`
-	Runs  int `json:"runs"`
+	Overs float32 `json:"overs"`
+	Runs  int     `json:"runs"`
 }
 
 // Replacements represents player replacements in a delivery.
@@ -177,4 +177,5 @@ type Review struct {
 	Decision    string `json:"decision"`
 	Umpire      string `json:"umpire,omitempty"`
 	UmpiresCall bool   `json:"umpires_call,omitempty"`
+	Type        string `json:"type,omitempty"`
 }
