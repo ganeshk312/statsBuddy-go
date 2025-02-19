@@ -1,0 +1,261 @@
+{
+  "database": "all_india",
+  "collection": "matches",
+  "schema": {
+    "bsonType": "object",
+    "required": ["info", "innings", "meta"],
+    "properties": {
+      "meta": {
+        "bsonType": "object",
+        "required": ["data_version", "created", "revision"],
+        "properties": {
+          "data_version": {
+            "bsonType": "string"
+          },
+          "created": {
+            "bsonType": "date"
+          },
+          "revision": {
+            "bsonType": "int"
+          }
+        }
+      },
+      "info": {
+        "bsonType": "object",
+        "required": ["balls_per_over", "venue", "dates", "gender", "teams", "match_type", "overs", "season"],
+        "properties": {
+          "balls_per_over": {
+            "bsonType": "int"
+          },
+          "venue": {
+            "bsonType": "string"
+          },
+          "dates": {
+            "bsonType": "array",
+            "items": {
+              "bsonType": "string"
+            }
+          },
+          "event": {
+            "bsonType": "object",
+            "properties": {
+              "name": {
+                "bsonType": "string"
+              },
+              "group": {
+                "bsonType": "string"
+              }
+            }
+          },
+          "gender": {
+            "bsonType": "string"
+          },
+          "teams": {
+            "bsonType": "array",
+            "items": {
+              "bsonType": "string"
+            }
+          },
+          "outcome": {
+            "bsonType": "object",
+            "properties": {
+              "winner": {
+                "bsonType": "string"
+              },
+              "by": {
+                "bsonType": "object",
+                "properties": {
+                  "runs": {
+                    "bsonType": "int"
+                  },
+                  "wickets": {
+                    "bsonType": "int"
+                  },
+                  "innings": {
+                    "bsonType": "int"
+                  }
+                }
+              },
+              "result": {
+                "bsonType": "string"
+              },
+              "method": {
+                "bsonType": "string"
+              }
+            }
+          },
+          "toss": {
+            "bsonType": "object",
+            "required": ["decision", "winner"],
+            "properties": {
+              "decision": {
+                "bsonType": "string"
+              },
+              "winner": {
+                "bsonType": "string"
+              },
+              "uncontested": {
+                "bsonType": "bool"
+              }
+            }
+          },
+          "player_of_match": {
+            "bsonType": "array",
+            "items": {
+              "bsonType": "string"
+            }
+          },
+          "match_type": {
+            "bsonType": "string"
+          },
+          "overs": {
+            "bsonType": "int"
+          },
+          "season": {
+            "bsonType": "string"
+          }
+        }
+      },
+      "innings": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": ["team", "overs"],
+          "properties": {
+            "team": {
+              "bsonType": "string"
+            },
+            "overs": {
+              "bsonType": "array",
+              "items": {
+                "bsonType": "object",
+                "required": ["over", "deliveries"],
+                "properties": {
+                  "over": {
+                    "bsonType": "int"
+                  },
+                  "deliveries": {
+                    "bsonType": "array",
+                    "items": {
+                      "bsonType": "object",
+                      "required": ["batter", "bowler", "non_striker", "runs"],
+                      "properties": {
+                        "batter": {
+                          "bsonType": "string"
+                        },
+                        "bowler": {
+                          "bsonType": "string"
+                        },
+                        "non_striker": {
+                          "bsonType": "string"
+                        },
+                        "runs": {
+                          "bsonType": "object",
+                          "required": ["batter", "extras", "total"],
+                          "properties": {
+                            "batter": {
+                              "bsonType": "int"
+                            },
+                            "extras": {
+                              "bsonType": "int"
+                            },
+                            "total": {
+                              "bsonType": "int"
+                            },
+                            "non_boundary": {
+                              "bsonType": "bool"
+                            }
+                          }
+                        },
+                        "extras": {
+                          "bsonType": "object",
+                          "properties": {
+                            "byes": {
+                              "bsonType": "int"
+                            },
+                            "legbyes": {
+                              "bsonType": "int"
+                            },
+                            "noballs": {
+                              "bsonType": "int"
+                            },
+                            "wides": {
+                              "bsonType": "int"
+                            },
+                            "penalty": {
+                              "bsonType": "int"
+                            }
+                          }
+                        },
+                        "wickets": {
+                          "bsonType": "array",
+                          "items": {
+                            "bsonType": "object",
+                            "required": ["kind", "player_out"],
+                            "properties": {
+                              "kind": {
+                                "bsonType": "string"
+                              },
+                              "player_out": {
+                                "bsonType": "string"
+                              },
+                              "fielders": {
+                                "bsonType": "array",
+                                "items": {
+                                  "bsonType": "object",
+                                  "properties": {
+                                    "name": {
+                                      "bsonType": "string"
+                                    },
+                                    "substitute": {
+                                      "bsonType": "bool"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "review": {
+                          "bsonType": "object",
+                          "properties": {
+                            "by": {
+                              "bsonType": "string"
+                            },
+                            "umpire": {
+                              "bsonType": "string"
+                            },
+                            "batter": {
+                              "bsonType": "string"
+                            },
+                            "decision": {
+                              "bsonType": "string"
+                            },
+                            "umpires_call": {
+                              "bsonType": "bool"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "target": {
+              "bsonType": "object",
+              "properties": {
+                "overs": {
+                  "bsonType": "double"
+                },
+                "runs": {
+                  "bsonType": "int"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
